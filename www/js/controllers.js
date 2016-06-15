@@ -51,5 +51,25 @@ var deploy = new Ionic.Deploy();
 .controller('AccountCtrl', function($scope) {
   $scope.settings = {
     enableFriends: true
-  };
+  }
+
+.controller('MapController', function($scope) {
+
+  var platform = new H.service.Platform({
+    'app_id': 'DemoAppId01082013GAL',
+    'app_code': 'AJKnXv84fjrb0KIHawS0Tg'
+    });
+
+    // Obtain the default map types from the platform object
+    var maptypes = platform.createDefaultLayers();
+
+    // Instantiate (and display) a map object:
+    $scope.map = new H.Map(
+    document.getElementById('mapContainer'),
+    maptypes.normal.map,
+    {
+      zoom: 10,
+      center: { lng: 13.4, lat: 52.51 }
+    });
+  });
 });
