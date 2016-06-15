@@ -23,7 +23,7 @@ var deploy = new Ionic.Deploy();
     }, function(err) {
       console.error('Ionic Deploy: Unable to check for updates', err);
     });
-  }
+  };
 
 
 
