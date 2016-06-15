@@ -24,52 +24,26 @@ var deploy = new Ionic.Deploy();
       console.error('Ionic Deploy: Unable to check for updates', err);
     });
   };
-
-
-
 })
-
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
-
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
-})
-
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
-})
-
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  }
 
 .controller('MapController', function($scope) {
 
-  var platform = new H.service.Platform({
-    'app_id': 'DemoAppId01082013GAL',
-    'app_code': 'AJKnXv84fjrb0KIHawS0Tg'
-    });
+  this.hello = "Hello World";
 
-    // Obtain the default map types from the platform object
-    var maptypes = platform.createDefaultLayers();
+  // var platform = new H.service.Platform({
+  //   'app_id': 'DemoAppId01082013GAL',
+  //   'app_code': 'AJKnXv84fjrb0KIHawS0Tg'
+  //   });
 
-    // Instantiate (and display) a map object:
-    $scope.map = new H.Map(
-    document.getElementById('mapContainer'),
-    maptypes.normal.map,
-    {
-      zoom: 10,
-      center: { lng: 13.4, lat: 52.51 }
-    });
+  //   // Obtain the default map types from the platform object
+  //   var maptypes = platform.createDefaultLayers();
+
+  //   // Instantiate (and display) a map object:
+  //   $scope.map = new H.Map(
+  //   document.getElementById('mapContainer'),
+  //   maptypes.normal.map,
+  //   {
+  //     zoom: 10,
+  //     center: { lng: 13.4, lat: 52.51 }
+  //   });
   });
-});
