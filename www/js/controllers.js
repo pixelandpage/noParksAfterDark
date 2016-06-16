@@ -26,10 +26,23 @@ var deploy = new Ionic.Deploy();
   };
 })
 
-.controller('MapController', ['MapFactory', function(MapFactory) {
+.controller('MapController',  function($scope, IntrospectModule) {
 
   this.hello = "Hello World";
 
+  var factories = IntrospectModule('factories')
 
+  })
+   .factory('IntrospectModule', function($injector) {
+        // This factory will dynamically return all services/controllers/directives/etc
+        // given the module name.
 
-  }]);
+        return function (moduleName) {
+            var out = {};
+            angular.module(moduleName)._invokeQueue.forEach(function(item) {
+                var name = item[2][0];
+                out[name] = $injector.get(name);
+            });
+            return out;
+        };
+    })

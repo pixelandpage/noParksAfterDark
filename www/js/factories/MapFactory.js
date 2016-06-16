@@ -1,8 +1,12 @@
-starter.factory('MapFactory', function(){
+factories.factory('MapFactory', function(){
+
+  var app_code
+  var app_id
+
 
  var platform = new H.service.Platform({
-    'app_id': 'toJMr8CRe6wBffMtHC4B',
-    'app_code': 'pG2gTxRQDbxVAsdDMCN1WA'
+    'app_id': app_id,
+    'app_code': app_code
     });
 
     // var targetElement = document.getElementById('mapContainer');

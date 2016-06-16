@@ -29,9 +29,12 @@
   <div ng-controller="MapController as ctrl">
     <div style="width: 640px; height: 480px" id="mapContainer"></div>
 
+
   <p>
     {{ ctrl.hello }}
   </p>
+  <input id="new-request-coord" type="text" ng-model="address" placeholder="...">
+    <button id="request-coord" ng-click="ctrl.RequestCoord;"> Find Address </button>
 
   </div>
 
