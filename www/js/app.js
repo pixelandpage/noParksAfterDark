@@ -21,5 +21,4 @@ angular.module('starter', ['ionic','ionic.service.core', 'ngCordova', 'starter.c
       StatusBar.styleDefault();
     }
   });
-})
-
+});

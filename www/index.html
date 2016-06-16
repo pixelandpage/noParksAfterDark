@@ -7,7 +7,7 @@
   <link href="css/style.css" rel="stylesheet">
 
 
-  <!-- <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css"> -->
+  <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css">
 
   <script src="lib/ionic/js/ionic.bundle.js"></script>
   <script src="lib/ionic-platform-web-client/dist/ionic.io.bundle.min.js"></script>
@@ -17,16 +17,21 @@
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
 
-<!--
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
-  <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script> -->
-  <!-- <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
-  <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script> -->
+  <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+  <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 </head>
 
   <body>
+
   <div ng-controller="MapController as ctrl">
-  {{ ctrl.hello }}
+    <div style="width: 640px; height: 480px" id="mapContainer"></div>
+
+  <p>
+    {{ ctrl.hello }}
+  </p>
+
   </div>
 
 

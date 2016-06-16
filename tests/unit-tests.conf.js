@@ -21,11 +21,12 @@ module.exports = function(config) {
       '../www/js/app.js',
       '../www/js/controllers.js',
       '../www/js/services.js',
-      'unit-tests/api.controller.tests.js',
       'http://js.api.here.com/v3/3.0/mapsjs-core.js',
       'http://js.api.here.com/v3/3.0/mapsjs-service.js',
       'http://js.api.here.com/v3/3.0/mapsjs-mapevents.js',
-      'http://js.api.here.com/v3/3.0/mapsjs-ui.js'
+      'http://js.api.here.com/v3/3.0/mapsjs-ui.js',
+      '../www/lib/angular-mocks/angular-mocks.js',
+      'unit-tests/api.controller.tests.js'
     ],
 
 
