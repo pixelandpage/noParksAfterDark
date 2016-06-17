@@ -42,14 +42,9 @@ noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorS
 
 }]);
 
-var hereAppID
-var hereAppCode
-var searchText = "?searchtext=";
-var locationAppId = "&app_id="+hereAppID;
-var appCode = "&app_code="+hereAppCode;
-var gen = "&gen=8";
 
 
+// "https://no-parks-after-dark-backend.herokuapp.com/location/api/?searchtext=50%20commercial%20street
 
 noParks.service('routeGeneratorService', ['$http', function($http) {
   var self = this;
@@ -58,7 +53,7 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     console.log('getLocation called');
     var location = userInputLocation;
     console.log(location);
-    var url = "https://no-parks-after-dark-backend.herokuapp.com/location/api" + searchText + location + locationAppId + appCode + gen;
+    var url = "https://no-parks-after-dark-backend.herokuapp.com/location/api?searchtext=" + location;
     var data = JSON.stringify(location);
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
     console.log('data=' + data);
@@ -66,7 +61,8 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
 
     return $http.get(url ).then(function(res) {
       self.status = '';
-      console.log(res);
+      console.log(res)
+      console.log(url);
       return res;
     }).catch(function(res) {
       console.log(res);

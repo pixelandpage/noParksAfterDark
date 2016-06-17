@@ -1,7 +1,6 @@
 factories.factory('MapFactory', function(){
 
-  var app_code
-  var app_id
+
 
 
  var platform = new H.service.Platform({
