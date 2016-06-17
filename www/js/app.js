@@ -5,9 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-var noParks = angular.module('noParks', ['ionic','ionic.service.core', 'ngCordova','factories'])
 
-.run(function($ionicPlatform) {
+var noParks = angular.module('noParks', ['ionic','ionic.service.core', 'ngCordova','factories'])
+noParks.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
