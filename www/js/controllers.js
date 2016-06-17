@@ -1,6 +1,6 @@
-angular.module('starter.controllers', [])
+// angular.module('noParks.controllers', [])
 
-.controller('DashCtrl', function($scope) {
+noParks.controller('DashCtrl', function($scope) { //links to Ionic
 var deploy = new Ionic.Deploy();
 
   // Update app code with new release from Ionic Deploy
@@ -24,13 +24,62 @@ var deploy = new Ionic.Deploy();
       console.error('Ionic Deploy: Unable to check for updates', err);
     });
   };
-})
+});
 
-.controller('MapController',  function($scope, IntrospectModule) {
+noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService', function($scope, $http, routeGeneratorService){
+  var self = this;
 
+  self.currentRequest = [];
+
+  $scope.routeGenerator = function(userInput){
+    console.log('star' + userInput);
+    console.log('calling service');
+    routeGeneratorService.getLocation(userInput)
+    .then(function(response){
+      console.log(repsonse);
+      self.currentRequest.push(response);
+    });
+  };
+
+}]);
+
+var hereAppID = process.env.HERE_APP_ID;
+var hereAppCode = process.env.HERE_APP_CODE;
+var searchText = "?searchtext=";
+var locationAppId = "&app_id="+hereAppID;
+var appCode = "&app_code="+hereAppCode;
+var gen = "&gen=8";
+
+
+noParks.service('routeGeneratorService', ['$http', function($http) {
+  var self = this;
+
+  self.getLocation= function(userInputLocation) {
+    console.log('getLocation called');
+    var location = userInputLocation;
+    console.log(location);
+    var url = "https://no-parks-after-dark-backend.herokuapp.com/location" + searchText + location + locationAppId + appCode + gen;
+    var data = JSON.stringify(location);
+    var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
+    console.log('data=' + data);
+    console.log('headers=' + headers);
+
+    return $http.post('https://no-parks-after-dark-backend.herokuapp.com/location/api' + data, headers).then(function(res) {
+      self.status = '';
+      return res;
+    }).catch(function(res) {
+      console.log(res);
+      self.status = 'Failed';
+      return self.status;
+    });
+  };
+}]);
+
+noParks.controller('MapController',  function($scope, IntrospectModule) {
+  console.log('calling noParks controller');
   this.hello = "Hello World";
 
-  var factories = IntrospectModule('factories')
+  var factories = IntrospectModule('factories');
 
   })
    .factory('IntrospectModule', function($injector) {
@@ -45,4 +94,4 @@ var deploy = new Ionic.Deploy();
             });
             return out;
         };
-    })
+    });

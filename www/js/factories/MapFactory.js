@@ -1,7 +1,7 @@
 factories.factory('MapFactory', function(){
 
-  var app_code
-  var app_id
+  var app_code = '';
+  var app_id = '';
 
 
  var platform = new H.service.Platform({
@@ -35,4 +35,3 @@ factories.factory('MapFactory', function(){
 
 
 })
-
