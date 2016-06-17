@@ -15,3 +15,5 @@ Completely decoupled front and back end
 
 REST API
 Javascript API
+
+cordova-plugin-geolocation API

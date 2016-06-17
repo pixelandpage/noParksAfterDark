@@ -43,7 +43,6 @@ noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorS
 }]);
 
 
-
 // "https://no-parks-after-dark-backend.herokuapp.com/location/api/?searchtext=50%20commercial%20street
 
 noParks.service('routeGeneratorService', ['$http', function($http) {
@@ -61,7 +60,7 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
 
     return $http.get(url ).then(function(res) {
       self.status = '';
-      console.log(res)
+      console.log(res);
       console.log(url);
       return res;
     }).catch(function(res) {
@@ -72,23 +71,22 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
   };
 }]);
 
-noParks.controller('MapController',  function($scope, IntrospectModule) {
+noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
   console.log('calling noParks controller');
   this.hello = "Hello World";
 
-  var factories = IntrospectModule('factories');
 
-  })
-   .factory('IntrospectModule', function($injector) {
-        // This factory will dynamically return all services/controllers/directives/etc
-        // given the module name.
-
-        return function (moduleName) {
-            var out = {};
-            angular.module(moduleName)._invokeQueue.forEach(function(item) {
-                var name = item[2][0];
-                out[name] = $injector.get(name);
-            });
-            return out;
-        };
-    });
+}]);
+  //  noParks.factory('IntrospectModule',['$cordovaGeolocation', function($cordovaGeolocation, $injector) {
+  //       // This factory will dynamically return all services/controllers/directives/etc
+  //       // given the module name.
+   //
+  //       return function (moduleName) {
+  //           var out = {};
+  //           angular.module(moduleName)._invokeQueue.forEach(function(item) {
+  //               var name = item[2][0];
+  //               out[name] = $injector.get(name);
+  //           });
+  //           return out;
+  //       };
+  //   }]);
