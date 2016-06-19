@@ -61,6 +61,7 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     return $http.get(url ).then(function(res) {
       self.status = '';
       console.log(res);
+      console.log(res);
       console.log(url);
       return res;
     }).catch(function(res) {
