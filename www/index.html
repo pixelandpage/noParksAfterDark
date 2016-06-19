@@ -26,9 +26,10 @@
   <body ng-app="noParks">
 
   <div ng-controller="MapController as ctrl">
-    <div style="width: 640px; height: 480px" id="mapContainer"></div>
+    <div style="width: 640px; height: 480px" id="mapContainer">
 
-</div>
+    <br>
+     </div
   <p>
     {{ ctrl.hello }}
   </p>
@@ -36,15 +37,8 @@
   <input id="new-request-coord" type="text" ng-model="userStart" placeholder="Start Location">
   <input id="new-request-coord" type="text" ng-model="userEnd" placeholder="Destination">
     <button id="request-coord" ng-click="routeGenerator('starttext=' + userStart + '&endtext=' + userEnd)"> Get Route </button>
+    <div id="routeInstructionsContainer" style="width: 640px; height: 480px" ></div>
   </div>
-<!-- kilburn, london -->
-<!-- cricklewood, london -->
-<!--
-  <ion-nav-bar class="bar-stable">
-      <ion-nav-back-button>
-      </ion-nav-back-button>
-      </ion-nav-bar>
-    <ion-nav-view>
-  </ion-nav-view> -->
+
 </body>
 </html>

@@ -8,58 +8,14 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
             'app_code': app_code
         });
 
-        // var targetElement = document.getElementById('mapContainer');
-        // Obtain the default map types from the platform object
         var maptypes = platform.createDefaultLayers();
-
-        // Instantiate (and display) a map object:
-
 
         var posOptions = {
             timeout: 10000,
             enableHighAccuracy: false
         };
 
-
-        var watchOptions = {
-          timeout : 3000,
-          enableHighAccuracy: false // may cause errors if true
-        };
-
-        var watch = $cordovaGeolocation.watchPosition(watchOptions);
-        watch.then(
-          null,
-          function(err) {
-            // error
-          },
-          function(position) {
-            var lat  = position.coords.latitude;
-            var long = position.coords.longitude;
-        });
-
-
-        // watch.clearWatch();
-        // // OR
-        // $cordovaGeolocation.clearWatch(watch)
-        //   .then(function(result) {
-        //     // success
-        //     }, function (error) {
-        //     // error
-        //   });
-
-
-
-
-
-
-        // function moveMap(map) {
-        //     map.setCenter(getWeatherLocation());
-        //     map.setZoom(14);
-        // }
-
-
-
-        function getWeatherLocation() {
+        function createMap() {
 
             return $cordovaGeolocation
             .getCurrentPosition(posOptions)
@@ -72,44 +28,61 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
                         lng: long
                     },
                     zoom: 13
-                }
+                };
             });
         }
 
+//   group.addEventListener('tap', function (evt) {
+//     map.setCenter(evt.target.getPosition());
+//     openBubble(
+//        evt.target.getPosition(), evt.target.instruction);
+//   }, false);
 
-        // console.log(getWeatherLocation());
+//   map.addObject(group);
+// }
+//
 
-
-        return getWeatherLocation().then((data) => {
+//
+//      // Add a marker for each maneuver
+//   for (i = 0;  i < route.leg.length; i += 1) {
+//     for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+//       // Get the next maneuver.
+//       maneuver = route.leg[i].maneuver[j];
+//
+//       var li = document.createElement('li'),
+//         spanArrow = document.createElement('span'),
+//         spanInstruction = document.createElement('span');
+//
+//       spanArrow.className = 'arrow '  + maneuver.action;
+//       spanInstruction.innerHTML = maneuver.instruction;
+//       li.appendChild(spanArrow);
+//       li.appendChild(spanInstruction);
+//
+//       nodeOL.appendChild(li);
+//     }
+//   }
+//
+//   routeInstructionsContainer.appendChild(nodeOL);
+// }
+//
+// Number.prototype.toMMSS = function () {
+//   return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
+// };
+//
+// // Now use the map as required...
+// calculateRouteFromAtoB (platform);
+//   }
+//
+      var map = createMap().then((data) => {
                                       console.log(data);
                var map = new H.Map(mapContainer, maptypes.normal.map, data);
                         var ui = H.ui.UI.createDefault(map, maptypes);
                         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
                                       return map;
                                   });
+//
+// addRoute(map);
 
-                // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-        //         map.addEventListener('tap', function(evt) {
-        //     console.log(evt.type, evt.currentPointer.type);
-        //     moveMap(map);
-        //     console.log(moveMap(map))
-        //     //event target is the marker itself, group is a parent event target
-        //     var bubble = new H.ui.InfoBubble(evt.target.getPosition(), {
-        //         // read custom data
-        //         content: evt.target.getData()
-        //     });
-        //     //show info bubble
-        //     ui.addBubble(bubble);
-        // }, false);
-//         var ui = H.ui.UI.createDefault(map, maptypes);
-
-
-
-// return map;
-
-
-
-        // createMap();
-
+ return map;
     }
 ]);

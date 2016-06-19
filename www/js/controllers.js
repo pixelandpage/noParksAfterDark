@@ -45,9 +45,6 @@ noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorS
 
 }]);
 
-
-// "https://no-parks-after-dark-backend.herokuapp.com/location/api/?searchtext=50%20commercial%20street
-
 noParks.service('routeGeneratorService', ['$http', function($http) {
   var self = this;
 
@@ -61,12 +58,35 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     console.log('data=' + data);
     console.log('headers=' + headers);
 
-    return $http.get(url ).then(function(res) {
+    return $http.get(url ).then(function(result) {
       self.status = '';
-      console.log(res);
+      console.log(result);
       console.log(url);
-      console.log(res.data);
-      return res;
+      console.log(result.data);
+
+        routeInstructions(result);
+
+      function routePoints(result) {
+        console.log(result);
+        var route = result.response.route[0];
+      console.log(route);
+        addRouteShapeToMap(route);
+        addManueversToMap(route);
+      }
+
+      function routeInstructions(result){
+          console.log(result);
+          console.log(result);
+          console.log(result);
+          console.log(result);
+          console.log(result);
+          console.log(result);
+          var route = result.data.response.route[0];
+          addWaypointsToPanel(route.waypoint);
+        addManueversToPanel(route);
+        addSummaryToPanel(route.summary);
+      }
+
     }).catch(function(res) {
       console.log(res);
       self.status = 'Failed';
@@ -75,22 +95,75 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
   };
 }]);
 
+function addWaypointsToPanel(waypoints){
+
+  var nodeH3 = document.createElement('h3'),
+    waypointLabels = [],
+    i;
+
+   for (i = 0;  i < waypoints.length; i += 1) {
+    waypointLabels.push(waypoints[i].label);
+   }
+
+   nodeH3.textContent = waypointLabels.join(' - ');
+
+  routeInstructionsContainer.innerHTML = '';
+  routeInstructionsContainer.appendChild(nodeH3);
+}
+
+function addSummaryToPanel(summary){
+  var summaryDiv = document.createElement('div'),
+   content = '';
+   content += '<b>Total distance</b>: ' + summary.distance  + 'm. <br/>';
+   content += '<b>Travel Time</b>: ' + summary.travelTime.toMMSS() + ' (in current traffic)';
+
+  summaryDiv.style.fontSize = 'small';
+    summaryDiv.style.marginLeft ='5%';
+  summaryDiv.style.marginRight ='5%';
+  summaryDiv.innerHTML = content;
+  routeInstructionsContainer.appendChild(summaryDiv);
+}
+
+function addManueversToPanel(route){
+
+  var nodeOL = document.createElement('ol'),
+    i,
+    j;
+
+  nodeOL.style.fontSize = 'small';
+  nodeOL.style.marginLeft ='5%';
+  nodeOL.style.marginRight ='5%';
+  nodeOL.className = 'directions';
+
+     // Add a marker for each maneuver
+  for (i = 0;  i < route.leg.length; i += 1) {
+    for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
+      // Get the next maneuver.
+      maneuver = route.leg[i].maneuver[j];
+
+      var li = document.createElement('li'),
+        spanArrow = document.createElement('span'),
+        spanInstruction = document.createElement('span');
+
+      spanArrow.className = 'arrow '  + maneuver.action;
+      spanInstruction.innerHTML = maneuver.instruction;
+      li.appendChild(spanArrow);
+      li.appendChild(spanInstruction);
+
+      nodeOL.appendChild(li);
+    }
+  }
+
+  routeInstructionsContainer.appendChild(nodeOL);
+}
+
+Number.prototype.toMMSS = function () {
+  return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
+};
+
 noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
   console.log('calling noParks controller');
   this.hello = "Hello World";
 
 
 }]);
-  //  noParks.factory('IntrospectModule',['$cordovaGeolocation', function($cordovaGeolocation, $injector) {
-  //       // This factory will dynamically return all services/controllers/directives/etc
-  //       // given the module name.
-   //
-  //       return function (moduleName) {
-  //           var out = {};
-  //           angular.module(moduleName)._invokeQueue.forEach(function(item) {
-  //               var name = item[2][0];
-  //               out[name] = $injector.get(name);
-  //           });
-  //           return out;
-  //       };
-  //   }]);
