@@ -61,9 +61,9 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     return $http.get(url ).then(function(res) {
       self.status = '';
       console.log(res);
-      console.log(res);
+      console.log(res.data.Response.View[0].Result[0].Location.DisplayPosition.Latitude);
       console.log(url);
-      return res;
+      return res.data.Response.View[0].Result[0].Location.DisplayPosition;
     }).catch(function(res) {
       console.log(res);
       self.status = 'Failed';
@@ -72,10 +72,11 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
   };
 }]);
 
+
+
 noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
   console.log('calling noParks controller');
   this.hello = "Hello World";
-
 
 }]);
   //  noParks.factory('IntrospectModule',['$cordovaGeolocation', function($cordovaGeolocation, $injector) {
