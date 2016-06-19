@@ -32,13 +32,16 @@ noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorS
   self.currentRequest = [];
 
   $scope.routeGenerator = function(userInput){
-    console.log('star' + userInput);
+    // console.log(userInput);
     console.log('calling service');
     routeGeneratorService.getLocation(userInput)
     .then(function(response){
       self.currentRequest.push(response);
     });
+
+    console.log(self.currentRequest);
   };
+    // console.log(self.currentRequest); // not available
 
 }]);
 
@@ -61,8 +64,8 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     return $http.get(url ).then(function(res) {
       self.status = '';
       console.log(res);
-      console.log(res);
       console.log(url);
+      console.log(res.data);
       return res;
     }).catch(function(res) {
       console.log(res);

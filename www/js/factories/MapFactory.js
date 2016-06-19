@@ -86,7 +86,7 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
                         var ui = H.ui.UI.createDefault(map, maptypes);
                         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
                                       return map;
-                                  })
+                                  });
 
                 // var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         //         map.addEventListener('tap', function(evt) {
