@@ -52,7 +52,7 @@ noParks.service('routeGeneratorService', ['$http', function($http) {
     console.log('getLocation called');
     var location = userInputLocation;
     console.log(location);
-    var url = "https://no-parks-after-dark-backend.herokuapp.com/location/api?searchtext=" + location;
+    var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location;
     var data = JSON.stringify(location);
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
     console.log('data=' + data);

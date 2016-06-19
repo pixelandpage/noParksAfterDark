@@ -33,8 +33,9 @@
     {{ ctrl.hello }}
   </p>
   <div ng-controller="RouteRequestController">
-  <input id="new-request-coord" type="text" ng-model="userInput" placeholder="...">
-    <button id="request-coord" ng-click="routeGenerator(userInput)"> Find Address </button>
+  <input id="new-request-coord" type="text" ng-model="userStart" placeholder="Start Location">
+  <input id="new-request-coord" type="text" ng-model="userEnd" placeholder="Destination">
+    <button id="request-coord" ng-click="routeGenerator('starttext=' + userStart + '&endtext=' + userEnd)"> Get Route </button>
   </div>
 
 <!--
