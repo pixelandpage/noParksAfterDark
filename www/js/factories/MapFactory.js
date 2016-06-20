@@ -72,16 +72,24 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
 // // Now use the map as required...
 // calculateRouteFromAtoB (platform);
 //   }
-//
-      var map = createMap().then((data) => {
-                                      console.log(data);
+function map(){
+      createMap().then((data) => {
                var map = new H.Map(mapContainer, maptypes.normal.map, data);
                         var ui = H.ui.UI.createDefault(map, maptypes);
                         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
                                       return map;
                                   });
-//
+                                }
 // addRoute(map);
+// var map = new H.Map(mapContainer,
+//  maptypes.normal.map,{
+//  center: {lat:52.5160, lng:13.3779},
+//  zoom: 13
+// });
+// var ui = H.ui.UI.createDefault(map, maptypes);
+//                   var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+// console.log(map);
+ var maps = map();
 
  return map;
     }
