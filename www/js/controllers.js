@@ -24,20 +24,20 @@ var deploy = new Ionic.Deploy();
   };
 });
 
-noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService',  function($scope, $http, routeGeneratorService){
-  var self = this;
+// noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService',  function($scope, $http, routeGeneratorService){
+//   var self = this;
 
-  self.currentRequest = [];
+//   self.currentRequest = [];
 
-  $scope.routeGenerator = function(userInput){
+//   $scope.routeGenerator = function(userInput){
 
-    routeGeneratorService.getLocation(userInput)
-    .then(function(response){
-      console.log(response);
-      self.currentRequest.push(response);
-    });
-  };
-}]);
+//     routeGeneratorService.getLocation(userInput)
+//     .then(function(response){
+//       console.log(response);
+//       self.currentRequest.push(response);
+//     });
+//   };
+// }]);
 
 noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http, MapFactory) {
   var self = this;
@@ -46,9 +46,10 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
 //https://no-parks-after-dark-backend.herokuapp.com/route/api/?endtext=50%20commercial%20street%20london&starttext=100%20shoreditch%20high%20street%20london
 // https://no-parks-after-dark-backend.herokuapp.com/route/api/
 // ?endtext=50%20commercial%20street%20london&starttext=100%20shoreditch%20high%20street%20london&type=pedestrian&nightmode=park:-1,tunnel:-1
-
+console.log(mapContainer);
   self.getLocation= function(userInputLocation) {
     var location = userInputLocation;
+    console.log(location);
     var extraparams = '&type=pedestrian&nightmode=park:-1,tunnel:-1'
     var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location + extraparams;
     var data = JSON.stringify(location);
@@ -56,7 +57,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
     return $http.get(url).then(function(result) {
       self.status = '';
        routePoints(result);
-      // routeInstructions(result);
+      routeInstructions(result);
 
     })}
 
@@ -68,11 +69,16 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
             'app_id': app_id,
             'app_code': app_code
         });
+
         var maptypes = platform.createDefaultLayers();
-         map = new H.Map(document.getElementById('routeContainer'), maptypes.normal.map);
+                document.getElementById('mapContainer').innerHTML = ''
+
+         map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map);
+          var ui = H.ui.UI.createDefault(map, maptypes);
+                        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         var route = result.data.response.route;
         addRouteShapeToMap(route);
-        // addManueversToMap(route);
+        addManueversToMap(route);
       }
 
       function routeInstructions(result){
@@ -98,7 +104,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
              strokeColor: 'rgba(0, 128, 255, 0.7)'
            }
          });
-
+console.log(mapContainer);
          map.addObject(polyline);
          map.setViewBounds(polyline.getBounds(), true);
         }
@@ -210,24 +216,22 @@ function addManueversToPanel(route){
 }
 }]);
 
-noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
+noParks.controller('MapController', ['MapFactory','$scope','$http', 'routeGeneratorService', function( $scope, MapFactory, $http, routeGeneratorService) {
   console.log('calling noParks controller');
-  this.hello = "Hello World";
+    var self = this;
 
-  this.map = new MapFactory;
+  self.hello = "Hello World";
 
+  // self.map = new MapFactory;
+  self.currentRequest = [];
 
+  self.routeGenerator = function(userInput){
+    console.log('calling route')
+    routeGeneratorService.getLocation(userInput)
+    .then(function(response){
+      console.log(response);
+      self.currentRequest.push(response);
+});
+}
+    }]);
 
-
-
-  // self.addMap = function(temp) {
-  //   new MapFactory(temp);
-  // };
-
-
-  //                  self.temp = function(){
-  //                   return {center: {lat:52.5160, lng:13.3779}, zoom: 13};
-  //                  };
-
-
-}]);
