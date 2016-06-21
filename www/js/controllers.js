@@ -24,7 +24,7 @@ var deploy = new Ionic.Deploy();
   };
 });
 
-noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService', function($scope, $http, routeGeneratorService){
+noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService',  function($scope, $http, routeGeneratorService){
   var self = this;
 
   self.currentRequest = [];
@@ -33,6 +33,7 @@ noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorS
 
     routeGeneratorService.getLocation(userInput)
     .then(function(response){
+      console.log(response);
       self.currentRequest.push(response);
     });
   };
@@ -54,108 +55,93 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
     return $http.get(url).then(function(result) {
       self.status = '';
-      routeInstructions(result);
+       routePoints(result);
+      // routeInstructions(result);
 
-    })
-  }
-      // console.log(result.data);
+    })}
 
-}])
-      // function routePoints(result) {
-      //   console.log(result);
-      //   var route = result.data.response.route;
-      // console.log(route);
-      //   addRouteShapeToMap();
-      //   addManueversToMap(route);
-      // }
+      function routePoints(result) {
+        var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
+        var app_id = 'toJMr8CRe6wBffMtHC4B';
+
+          var platform = new H.service.Platform({
+            'app_id': app_id,
+            'app_code': app_code
+        });
+        var maptypes = platform.createDefaultLayers();
+         map = new H.Map(document.getElementById('routeContainer'), maptypes.normal.map);
+        var route = result.data.response.route;
+        addRouteShapeToMap(route);
+        // addManueversToMap(route);
+      }
 
       function routeInstructions(result){
           var route = result.data.response.route[0];
-          console.log(route);
         addWaypointsToPanel(route.waypoint);
         addManueversToPanel(route);
         addSummaryToPanel(route.summary);
       }
-//         // function addRouteShapeToMap(){
-//         //   var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
-//         //   var app_id = 'toJMr8CRe6wBffMtHC4B';
+        function addRouteShapeToMap(route){
 
-//         //   var platform = new H.service.Platform({
-//         //       'app_id': app_id,
-//         //       'app_code': app_code
-//         //   });
-//         //   var maptypes = platform.createDefaultLayers();
+         var strip = new H.geo.Strip(),
+           routeShape = route[0].shape
+           console.log(routeShape);
 
-//         //   var map = new H.Map(mapContainer,
-//         //    maptypes.normal.map,{
-//         //    center: {lat:52.5160, lng:13.3779},
-//         //    zoom: 13
-//         //   });
-//         //   var ui = H.ui.UI.createDefault(map, maptypes);
-//         //                     var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-//         //   console.log(self.map);
-//         //   // console.log(self.map);
-//         //  var strip = new H.geo.Strip(),
-//         //    routeShape = route.shape
-//         //    console.log(routeShape);
+         routeShape.forEach(function(point) {
+           var parts = point.split(',');
+           strip.pushLatLngAlt(parts[0], parts[1]);
+         });
 
-//         //  routeShape.forEach(function(point) {
-//         //    var parts = point.split(',');
-//         //    strip.pushLatLngAlt(parts[0], parts[1]);
-//         //  });
+         polyline = new H.map.Polyline(strip, {
+           style: {
+             lineWidth: 4,
+             strokeColor: 'rgba(0, 128, 255, 0.7)'
+           }
+         });
 
-//         //  polyline = new H.map.Polyline(strip, {
-//         //    style: {
-//         //      lineWidth: 4,
-//         //      strokeColor: 'rgba(0, 128, 255, 0.7)'
-//         //    }
-//         //  });
-//         //  console.log(polyline);
-//         //  console.log(self.map);
-//         //  console.log(addObject());
-//         //  self.map.addObject(polyline);
-//         //  self.map.setViewBounds(polyline.getBounds(), true);
-//         // }
+         map.addObject(polyline);
+         map.setViewBounds(polyline.getBounds(), true);
+        }
 
 
-// //         function addManueversToMap(route){
-// //          var svgMarkup = '<svg width="18" height="18" ' +
-// //            'xmlns="http://www.w3.org/2000/svg">' +
-// //            '<circle cx="8" cy="8" r="8" ' +
-// //              'fill="#1b468d " stroke="white" stroke-width="1"  />' +
-// //            '</svg>',
-// //            dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
-// //            group = new  H.map.Group(),
-// //            i,
-// //            j;
+        // function addManueversToMap(route){
+        //  var svgMarkup = '<svg width="18" height="18" ' +
+        //    'xmlns="http://www.w3.org/2000/svg">' +
+        //    '<circle cx="8" cy="8" r="8" ' +
+        //      'fill="#1b468d " stroke="white" stroke-width="1"  />' +
+        //    '</svg>',
+        //    dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+        //    group = new  H.map.Group(),
+        //    i,
+        //    j;
 
-// //            for (i = 0;  i < route.leg.length; i += 1) {
-// //            for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
-// //              maneuver = route.leg[i].maneuver[j];
-// //              var marker =  new H.map.Marker({
-// //                lat: maneuver.position.latitude,
-// //                lng: maneuver.position.longitude} ,
-// //                {icon: dotIcon});
-// //              marker.instruction = maneuver.instruction;
-// //              group.addObject(marker);
-// //            }
-// //          }
+        //    for (i = 0;  i < route[0].leg.length; i += 1) {
+        //    for (j = 0;  j < route[0].leg[i].maneuver.length; j += 1) {
+        //      maneuver = route[0].leg[i].maneuver[j];
+        //      var marker =  new H.map.Marker({
+        //        lat: maneuver.position.latitude,
+        //        lng: maneuver.position.longitude} ,
+        //        {icon: dotIcon});
+        //      marker.instruction = maneuver.instruction;
+        //      group.addObject(marker);
+        //    }
+        //  }
 
-// //          group.addEventListener('tap', function (evt) {
-// //            map.setCenter(evt.target.getPosition());
-// //            openBubble(
-// //               evt.target.getPosition(), evt.target.instruction);
-// //          }, false);
+  //        group.addEventListener('tap', function (evt) {
+  //          map.setCenter(evt.target.getPosition());
+  //          openBubble(
+  //             evt.target.getPosition(), evt.target.instruction);
+  //        }, false);
 
-// //          mapContainer.addObject(group);
-// //         }
+         // map.addObject(group);
+        // }
 
-// //     }).catch(function(res) {
-// //       console.log(res);
-// //       self.status = 'Failed';
-// //       return self.status;
-// //     });
-// //   };
+  //   }).catch(function(res) {
+  //     console.log(res);
+  //     self.status = 'Failed';
+  //     return self.status;
+  //   });
+  // };
 
 function addWaypointsToPanel(waypoints){
 
@@ -219,17 +205,16 @@ function addManueversToPanel(route){
   routeInstructionsContainer.appendChild(nodeOL);
    Number.prototype.toMMSS = function () {
   return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
-}
-}
 
-// Number.prototype.toMMSS = function () {
-//   return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
-// });
-// }]);
+}
+}
+}]);
 
 noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
   console.log('calling noParks controller');
   this.hello = "Hello World";
+
+  this.map = new MapFactory;
 
 
 
