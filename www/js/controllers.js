@@ -143,6 +143,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
                lat: maneuver.position.latitude,
                lng: maneuver.position.longitude} ,
                {icon: dotIcon});
+               console.log(maneuver.position.latitude);
              marker.instruction = maneuver.instruction;
              group.addObject(marker);
            }

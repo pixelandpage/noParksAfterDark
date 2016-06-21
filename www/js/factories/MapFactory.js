@@ -15,6 +15,8 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
             enableHighAccuracy: false
         };
 
+        var lat, long;
+
         function createMap() {
 
             return $cordovaGeolocation
@@ -29,8 +31,13 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
                     },
                     zoom: 13
                 };
+
             });
         }
+
+
+
+
 
 //   group.addEventListener('tap', function (evt) {
 //     map.setCenter(evt.target.getPosition());
@@ -41,6 +48,25 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
 //   map.addObject(group);
 // }
 //
+function createMarker() {
+
+    return $cordovaGeolocation
+    .getCurrentPosition(posOptions)
+    .then(function(position) {
+        var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        return {
+            center: {
+                lat: lat,
+                lng: long
+            },
+            zoom: 13
+        };
+
+    });
+}
+var icon = new H.map.Icon('./img/marker.png');
+var marker = new H.map.Marker({lat:51.5255306,lng:-0.0735531},{ icon: icon });
 
 //
 //      // Add a marker for each maneuver
@@ -75,11 +101,13 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
 function map(){
       createMap().then((data) => {
                var map = new H.Map(mapContainer, maptypes.normal.map, data);
+               map.addObject(marker);
                         var ui = H.ui.UI.createDefault(map, maptypes);
                         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
                                       return map;
                                   });
                                 }
+
 // addRoute(map);
 // var map = new H.Map(mapContainer,
 //  maptypes.normal.map,{
@@ -89,8 +117,10 @@ function map(){
 // var ui = H.ui.UI.createDefault(map, maptypes);
 //                   var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 // console.log(map);
+
  var maps = map();
 
- return map;
-    }
+
+    return map;
+}
 ]);
