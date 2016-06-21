@@ -11,7 +11,8 @@
   <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css">
 
     <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
-  <script src="cordova.js"></script>
+  <!-- Cordova is bootstrapped by ionic-platform-web-client, uncomment this if you remove ionic-platform-web-client... -->
+<!-- <script src="cordova.js"></script> -->
   <script src="lib/ngCordova/dist/ng-cordova.js"></script>
   <script src="js/app.js"></script>
   <script src="js/controllers.js"></script>
@@ -22,23 +23,26 @@
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
   <script type="text/javascript" charset="UTF-8" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 </head>
+<ion-view title="Map">
+   <ion-content>
 
   <body ng-app="noParks">
 
   <div ng-controller="MapController as ctrl">
-    <div style="width: 640px; height: 480px" id="mapContainer">
+    <div style="width: 640px; height: 480px" id="mapContainer" >
 
     <br>
-     </div
-  <p>
+     </div>
     {{ ctrl.hello }}
-  </p>
+  <p></p>
   <div ng-controller="RouteRequestController">
   <input id="new-request-coord" type="text" ng-model="userStart" placeholder="Start Location">
   <input id="new-request-coord" type="text" ng-model="userEnd" placeholder="Destination">
-    <button id="request-coord" ng-click="routeGenerator('starttext=' + userStart + '&endtext=' + userEnd)"> Get Route </button>
-    <div id="routeInstructionsContainer" style="width: 640px; height: 480px" ></div>
+    <button id="request-coord" ng-click="routeGenerator('starttext='+ userStart + '&endtext=' + userEnd)"> Get Route </button>
+    <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
   </div>
 
-</body>
+</div></body>
+</ion-content>
+</ion-view>
 </html>
