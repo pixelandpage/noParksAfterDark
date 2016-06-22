@@ -6,7 +6,7 @@
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
 
-var noParks = angular.module('noParks', ['ionic', 'ionic.service.core', 'ngCordova'])
+var noParks = angular.module('noParks', ['ionic','ionic.service.core', 'noParks.controllers', 'noParks.factories', 'ngCordova']);
 noParks.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
@@ -21,6 +21,21 @@ noParks.run(function($ionicPlatform) {
       StatusBar.styleDefault();
     }
   });
-});
+})
 
+
+
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+
+    .state('app', {
+      url: "",
+      abstract: true,
+      templateUrl: "index.html",
+      controller: 'MapController'
+    })
+
+
+});
 // var factories = angular.module('factories', []);

@@ -1,4 +1,26 @@
-noParks.controller('DashCtrl', function($scope) { //links to Ionic
+angular.module('noParks.controllers', [])
+
+.controller('MapController', ['MapFactory','$scope','$http', 'routeGeneratorService', function( $scope, MapFactory, $http, routeGeneratorService) {
+  console.log('calling noParks controller');
+    var self = this;
+
+  self.hello = "Hello World";
+
+
+  self.currentRequest = [];
+
+  self.routeGenerator = function(userInput){
+    console.log('calling route')
+    routeGeneratorService.getLocation(userInput)
+    .then(function(response){
+      // console.log(response);
+      self.currentRequest.push(response);
+});
+}
+    }])
+
+
+.controller('DashCtrl', function($scope) { //links to Ionic
 var deploy = new Ionic.Deploy();
 
   // Update app code with new release from Ionic Deploy
@@ -128,6 +150,7 @@ console.log(mapContainer);
                lat: maneuver.position.latitude,
                lng: maneuver.position.longitude} ,
                {icon: dotIcon});
+               console.log(maneuver.position.latitude);
              marker.instruction = maneuver.instruction;
              group.addObject(marker);
            }
@@ -224,22 +247,5 @@ function addManueversToPanel(route){
 }
 }]);
 
-noParks.controller('MapController', ['MapFactory','$scope','$http', 'routeGeneratorService', function( $scope, MapFactory, $http, routeGeneratorService) {
-  console.log('calling noParks controller');
-    var self = this;
 
-  self.hello = "Hello World";
-
-  // self.map = new MapFactory;
-  self.currentRequest = [];
-
-  self.routeGenerator = function(userInput){
-    console.log('calling route')
-    routeGeneratorService.getLocation(userInput)
-    .then(function(response){
-      // console.log(response);
-      self.currentRequest.push(response);
-});
-}
-    }]);
 
