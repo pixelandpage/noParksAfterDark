@@ -9,6 +9,8 @@
 
   <link href="css/style.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css">
+  <script src="bower_components/here-maps-angular.js"></script>
+  <link type="text/css" rel="stylesheet" href="/css/here-maps-angular.css" >
 
 
 <script src="cordova.js"></script>
@@ -44,7 +46,18 @@
   <div id="locationField" ng-controller="MapController as ctrl">
     <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
     <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
-      <button id="request-coord" ng-click="ctrl.routeGenerator(&apos;starttext=&apos; + userStart + &apos;&amp;endtext=&apos; + userEnd)"> Get Route </button>
+    <label>
+
+    <input type="radio" ng-model="color.name" value="pedestrian" >
+    Walking
+  </label><br/>
+  <label>
+    <input type="radio" ng-model="color.name" value="publicTransportTimeTable" >
+    Public Transport
+  </label>
+
+
+      <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + color.name )"> Get Route </button>
       <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
 
   </div>
@@ -81,6 +94,54 @@
         });
       }
     }
+            var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
+        var app_id = 'toJMr8CRe6wBffMtHC4B';
+
+        var platform = new H.service.Platform({
+            'app_id': app_id,
+            'app_code': app_code
+        });
+
+        var maptypes = platform.createDefaultLayers();
+
+        var posOptions = {
+            timeout: 10000,
+            enableHighAccuracy: false
+        };
+
+        var lat, long;
+
+        function createMap() {
+            return $cordovaGeolocation
+            .getCurrentPosition(posOptions)
+            .then(function(position) {
+                lat = position.coords.latitude;
+                long = position.coords.longitude;
+                return {
+                    center: {
+                        lat: lat,
+                        lng: long
+                    },
+                    zoom: 13
+                }
+            });
+        }
+
+var icon = new H.map.Icon('./img/marker.png');
+
+
+function map(){
+      createMap().then((data) => {
+               var map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map, data);
+               var marker = new H.map.Marker({lat:lat,lng:long},{ icon: icon });
+               map.addObject(marker);
+                        var ui = H.ui.UI.createDefault(map, maptypes);
+                        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                                      return map;
+                                  });
+                                }
+ var maps = map();
+    return map;
   </script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeDWP97EV9nfUm4RhpWyVZ0fsTT9hBHgs&amp;libraries=places&amp;callback=initAutocomplete" async defer></script>
 </body>
