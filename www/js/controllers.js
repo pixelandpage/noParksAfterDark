@@ -1,4 +1,26 @@
-noParks.controller('DashCtrl', function($scope) { //links to Ionic
+angular.module('noParks.controllers', [])
+
+.controller('MapController', ['MapFactory','$scope','$http', 'routeGeneratorService', function( $scope, MapFactory, $http, routeGeneratorService) {
+  console.log('calling noParks controller');
+    var self = this;
+
+  self.hello = "Hello World";
+
+
+  self.currentRequest = [];
+
+  self.routeGenerator = function(userInput){
+    console.log('calling route')
+    routeGeneratorService.getLocation(userInput)
+    .then(function(response){
+      // console.log(response);
+      self.currentRequest.push(response);
+});
+}
+    }])
+
+
+.controller('DashCtrl', function($scope) { //links to Ionic
 var deploy = new Ionic.Deploy();
 
   // Update app code with new release from Ionic Deploy
@@ -24,89 +46,76 @@ var deploy = new Ionic.Deploy();
   };
 });
 
-noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService', function($scope, $http, routeGeneratorService){
-  var self = this;
+// noParks.controller('RouteRequestController', ['$scope','$http', 'routeGeneratorService',  function($scope, $http, routeGeneratorService){
+//   var self = this;
 
+//   self.currentRequest = [];
 
-  self.currentRequest = [];
+//   $scope.routeGenerator = function(userInput){
 
-  $scope.routeGenerator = function(userInput){
-    console.log(userInput);
-    console.log('calling service');
-    routeGeneratorService.getLocation(userInput)
-    .then(function(response){
-      self.currentRequest.push(response);
-    });
-    console.log(self.currentRequest);
-  };
-    // console.log(self.currentRequest); // not available
-
-}]);
+//     routeGeneratorService.getLocation(userInput)
+//     .then(function(response){
+//       console.log(response);
+//       self.currentRequest.push(response);
+//     });
+//   };
+// }]);
 
 noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http, MapFactory) {
   var self = this;
-  self.map = MapFactory;
-  console.log(self.map);
 
+//how a call would look like in full
+//https://no-parks-after-dark-backend.herokuapp.com/route/api/?endtext=50%20commercial%20street%20london&starttext=100%20shoreditch%20high%20street%20london
+// https://no-parks-after-dark-backend.herokuapp.com/route/api/
+// ?endtext=50%20commercial%20street%20london&starttext=100%20shoreditch%20high%20street%20london&type=pedestrian&nightmode=park:-1,tunnel:-1
+console.log(mapContainer);
   self.getLocation= function(userInputLocation) {
-    console.log('getLocation called');
     var location = userInputLocation;
     console.log(location);
-    var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location;
+    var extraparams = '&type=pedestrian&nightmode=park:-1,tunnel:-1'
+    var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location + extraparams;
     var data = JSON.stringify(location);
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
-    console.log('data=' + data);
-    console.log('headers=' + headers);
-
-    return $http.get(url ).then(function(result) {
+    return $http.get(url).then(function(result) {
       self.status = '';
-      console.log(result);
-      console.log(url);
-      console.log(result.data);
+       routePoints(result);
+      routeInstructions(result);
 
-        routeInstructions(result);
-        routePoints(result);
+    })}
 
       function routePoints(result) {
-        console.log(result);
+        var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
+        var app_id = 'toJMr8CRe6wBffMtHC4B';
+
+          var platform = new H.service.Platform({
+            'app_id': app_id,
+            'app_code': app_code
+        });
+
+        var maptypes = platform.createDefaultLayers();
+                document.getElementById('mapContainer').innerHTML = ''
+
+         map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map);
+          var ui = H.ui.UI.createDefault(map, maptypes);
+                        var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
         var route = result.data.response.route;
-      console.log(route);
-        addRouteShapeToMap();
+        addRouteShapeToMap(route);
         addManueversToMap(route);
       }
 
       function routeInstructions(result){
-          console.log(result);
           var route = result.data.response.route[0];
         addWaypointsToPanel(route.waypoint);
         addManueversToPanel(route);
         addSummaryToPanel(route.summary);
       }
-        function addRouteShapeToMap(){
-          // var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
-          // var app_id = 'toJMr8CRe6wBffMtHC4B';
-          //
-          // var platform = new H.service.Platform({
-          //     'app_id': app_id,
-          //     'app_code': app_code
-          // });
-          // var maptypes = platform.createDefaultLayers();
-          //
-          // var map = new H.Map(mapContainer,
-          //  maptypes.normal.map,{
-          //  center: {lat:52.5160, lng:13.3779},
-          //  zoom: 13
-          // });
-          // var ui = H.ui.UI.createDefault(map, maptypes);
-          //                   var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-          console.log(self.map);
-          // console.log(self.map);
-         var strip = new H.geo.Strip(),
-           routeShape = '["51.5140062,-0.0998158", "51.5139484,-0.099982","51.513809,-0.100143","51.5136373,-0.100261","51.5134978,-0.1000142","51.5133047,-0.0992632","51.513294,-0.0991023", "51.5131545,-0.0986195","51.5129399,-0.0982654", "51.5119743,-0.0983942", "51.5113628,-0.0984478", "51.5112448,-0.0984371", "51.5082836,-0.0986409", "51.5082735,-0.098473"]',
-           polyline;
-           console.log(JSON.parse(routeShape));
+        function addRouteShapeToMap(route){
 
-         JSON.parse(routeShape).forEach(function(point) {
+         var strip = new H.geo.Strip(),
+           routeShape = route[0].shape
+           console.log(routeShape);
+
+         routeShape.forEach(function(point) {
            var parts = point.split(',');
            strip.pushLatLngAlt(parts[0], parts[1]);
          });
@@ -117,11 +126,9 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
              strokeColor: 'rgba(0, 128, 255, 0.7)'
            }
          });
-         console.log(polyline);
-         console.log(self.map);
-         console.log(addObject());
-         self.map.addObject(polyline);
-         self.map.setViewBounds(polyline.getBounds(), true);
+console.log(mapContainer);
+         map.addObject(polyline);
+         map.setViewBounds(polyline.getBounds(), true);
         }
 
 
@@ -136,9 +143,9 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
            i,
            j;
 
-           for (i = 0;  i < route.leg.length; i += 1) {
-           for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
-             maneuver = route.leg[i].maneuver[j];
+           for (i = 0;  i < route[0].leg.length; i += 1) {
+           for (j = 0;  j < route[0].leg[i].maneuver.length; j += 1) {
+             maneuver = route[0].leg[i].maneuver[j];
              var marker =  new H.map.Marker({
                lat: maneuver.position.latitude,
                lng: maneuver.position.longitude} ,
@@ -155,16 +162,11 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
               evt.target.getPosition(), evt.target.instruction);
          }, false);
 
-         mapContainer.addObject(group);
-        }
+         map.addObject(group);
 
-    }).catch(function(res) {
-      console.log(res);
-      self.status = 'Failed';
-      return self.status;
-    });
+
+
   };
-}]);
 
 function addWaypointsToPanel(waypoints){
 
@@ -193,6 +195,18 @@ function addSummaryToPanel(summary){
   summaryDiv.style.marginRight ='5%';
   summaryDiv.innerHTML = content;
   routeInstructionsContainer.appendChild(summaryDiv);
+}
+
+function openBubble(position, text){
+
+    bubble =  new H.ui.InfoBubble(
+      position,
+      {content: text});
+    ui.addBubble(bubble);
+    bubble.setPosition(position);
+    bubble.setContent(text);
+    bubble.open();
+
 }
 
 function addManueversToPanel(route){
@@ -226,14 +240,12 @@ function addManueversToPanel(route){
   }
 
   routeInstructionsContainer.appendChild(nodeOL);
-}
-
-Number.prototype.toMMSS = function () {
+   Number.prototype.toMMSS = function () {
   return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
-};
 
-noParks.controller('MapController', ['MapFactory', function( $scope, MapFactory) {
-  console.log('calling noParks controller');
-  this.hello = "Hello World";
-
+}
+}
 }]);
+
+
+

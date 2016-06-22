@@ -1,4 +1,7 @@
-noParks.factory('MapFactory', ["$cordovaGeolocation",
+angular.module('noParks.factories', [])
+
+
+.factory('MapFactory', ["$cordovaGeolocation",
     function($cordovaGeolocation) {
         var app_code = 'pG2gTxRQDbxVAsdDMCN1WA';
         var app_id = 'toJMr8CRe6wBffMtHC4B';
@@ -18,7 +21,6 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
         var lat, long;
 
         function createMap() {
-
             return $cordovaGeolocation
             .getCurrentPosition(posOptions)
             .then(function(position) {
@@ -30,60 +32,16 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
                         lng: long
                     },
                     zoom: 13
-                };
-
+                }
             });
         }
 
-
-
-
-
-
-//   group.addEventListener('tap', function (evt) {
-//     map.setCenter(evt.target.getPosition());
-//     openBubble(
-//        evt.target.getPosition(), evt.target.instruction);
-//   }, false);
-
-//   map.addObject(group);
-// }
-//
 var icon = new H.map.Icon('./img/marker.png');
 
-//
-//      // Add a marker for each maneuver
-//   for (i = 0;  i < route.leg.length; i += 1) {
-//     for (j = 0;  j < route.leg[i].maneuver.length; j += 1) {
-//       // Get the next maneuver.
-//       maneuver = route.leg[i].maneuver[j];
-//
-//       var li = document.createElement('li'),
-//         spanArrow = document.createElement('span'),
-//         spanInstruction = document.createElement('span');
-//
-//       spanArrow.className = 'arrow '  + maneuver.action;
-//       spanInstruction.innerHTML = maneuver.instruction;
-//       li.appendChild(spanArrow);
-//       li.appendChild(spanInstruction);
-//
-//       nodeOL.appendChild(li);
-//     }
-//   }
-//
-//   routeInstructionsContainer.appendChild(nodeOL);
-// }
-//
-// Number.prototype.toMMSS = function () {
-//   return  Math.floor(this / 60)  +' minutes '+ (this % 60)  + ' seconds.';
-// };
-//
-// // Now use the map as required...
-// calculateRouteFromAtoB (platform);
-//   }
+
 function map(){
       createMap().then((data) => {
-               var map = new H.Map(mapContainer, maptypes.normal.map, data);
+               var map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map, data);
                var marker = new H.map.Marker({lat:lat,lng:long},{ icon: icon });
                map.addObject(marker);
                         var ui = H.ui.UI.createDefault(map, maptypes);
@@ -91,20 +49,7 @@ function map(){
                                       return map;
                                   });
                                 }
-
-// addRoute(map);
-// var map = new H.Map(mapContainer,
-//  maptypes.normal.map,{
-//  center: {lat:52.5160, lng:13.3779},
-//  zoom: 13
-// });
-// var ui = H.ui.UI.createDefault(map, maptypes);
-//                   var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
-// console.log(map);
-
  var maps = map();
-
-
     return map;
 }
 ]);
