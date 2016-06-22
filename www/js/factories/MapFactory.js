@@ -22,8 +22,8 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
             return $cordovaGeolocation
             .getCurrentPosition(posOptions)
             .then(function(position) {
-                var lat = position.coords.latitude;
-                var long = position.coords.longitude;
+                lat = position.coords.latitude;
+                long = position.coords.longitude;
                 return {
                     center: {
                         lat: lat,
@@ -39,6 +39,7 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
 
 
 
+
 //   group.addEventListener('tap', function (evt) {
 //     map.setCenter(evt.target.getPosition());
 //     openBubble(
@@ -48,25 +49,7 @@ noParks.factory('MapFactory', ["$cordovaGeolocation",
 //   map.addObject(group);
 // }
 //
-function createMarker() {
-
-    return $cordovaGeolocation
-    .getCurrentPosition(posOptions)
-    .then(function(position) {
-        var lat = position.coords.latitude;
-        var long = position.coords.longitude;
-        return {
-            center: {
-                lat: lat,
-                lng: long
-            },
-            zoom: 13
-        };
-
-    });
-}
 var icon = new H.map.Icon('./img/marker.png');
-var marker = new H.map.Marker({lat:51.5255306,lng:-0.0735531},{ icon: icon });
 
 //
 //      // Add a marker for each maneuver
@@ -101,6 +84,7 @@ var marker = new H.map.Marker({lat:51.5255306,lng:-0.0735531},{ icon: icon });
 function map(){
       createMap().then((data) => {
                var map = new H.Map(mapContainer, maptypes.normal.map, data);
+               var marker = new H.map.Marker({lat:lat,lng:long},{ icon: icon });
                map.addObject(marker);
                         var ui = H.ui.UI.createDefault(map, maptypes);
                         var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
