@@ -110,44 +110,40 @@ console.log(mapContainer);
         }
 
 
-        // function addManueversToMap(route){
-        //  var svgMarkup = '<svg width="18" height="18" ' +
-        //    'xmlns="http://www.w3.org/2000/svg">' +
-        //    '<circle cx="8" cy="8" r="8" ' +
-        //      'fill="#1b468d " stroke="white" stroke-width="1"  />' +
-        //    '</svg>',
-        //    dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
-        //    group = new  H.map.Group(),
-        //    i,
-        //    j;
+        function addManueversToMap(route){
+         var svgMarkup = '<svg width="18" height="18" ' +
+           'xmlns="http://www.w3.org/2000/svg">' +
+           '<circle cx="8" cy="8" r="8" ' +
+             'fill="#1b468d " stroke="white" stroke-width="1"  />' +
+           '</svg>',
+           dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
+           group = new  H.map.Group(),
+           i,
+           j;
 
-        //    for (i = 0;  i < route[0].leg.length; i += 1) {
-        //    for (j = 0;  j < route[0].leg[i].maneuver.length; j += 1) {
-        //      maneuver = route[0].leg[i].maneuver[j];
-        //      var marker =  new H.map.Marker({
-        //        lat: maneuver.position.latitude,
-        //        lng: maneuver.position.longitude} ,
-        //        {icon: dotIcon});
-        //      marker.instruction = maneuver.instruction;
-        //      group.addObject(marker);
-        //    }
-        //  }
+           for (i = 0;  i < route[0].leg.length; i += 1) {
+           for (j = 0;  j < route[0].leg[i].maneuver.length; j += 1) {
+             maneuver = route[0].leg[i].maneuver[j];
+             var marker =  new H.map.Marker({
+               lat: maneuver.position.latitude,
+               lng: maneuver.position.longitude} ,
+               {icon: dotIcon});
+             marker.instruction = maneuver.instruction;
+             group.addObject(marker);
+           }
+         }
 
-  //        group.addEventListener('tap', function (evt) {
-  //          map.setCenter(evt.target.getPosition());
-  //          openBubble(
-  //             evt.target.getPosition(), evt.target.instruction);
-  //        }, false);
+         group.addEventListener('tap', function (evt) {
+           map.setCenter(evt.target.getPosition());
+           openBubble(
+              evt.target.getPosition(), evt.target.instruction);
+         }, false);
 
-         // map.addObject(group);
-        // }
+         map.addObject(group);
 
-  //   }).catch(function(res) {
-  //     console.log(res);
-  //     self.status = 'Failed';
-  //     return self.status;
-  //   });
-  // };
+
+
+  };
 
 function addWaypointsToPanel(waypoints){
 
@@ -176,6 +172,18 @@ function addSummaryToPanel(summary){
   summaryDiv.style.marginRight ='5%';
   summaryDiv.innerHTML = content;
   routeInstructionsContainer.appendChild(summaryDiv);
+}
+
+function openBubble(position, text){
+
+    bubble =  new H.ui.InfoBubble(
+      position,
+      {content: text});
+    ui.addBubble(bubble);
+    bubble.setPosition(position);
+    bubble.setContent(text);
+    bubble.open();
+
 }
 
 function addManueversToPanel(route){
@@ -229,7 +237,7 @@ noParks.controller('MapController', ['MapFactory','$scope','$http', 'routeGenera
     console.log('calling route')
     routeGeneratorService.getLocation(userInput)
     .then(function(response){
-      console.log(response);
+      // console.log(response);
       self.currentRequest.push(response);
 });
 }

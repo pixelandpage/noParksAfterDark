@@ -28,7 +28,7 @@
 
   <body ng-app="noParks">
   <div ng-controller="MapController as ctrl">
-      <div  id="mapContainer" style="width: 640px; height: 480px">
+      <div id="mapContainer" style="width: 640px; height: 480px">
       </div>
    <!--  <div id="mapContainer" style="position:absolute; width:100%; height:51%; background:grey" >
     <div id="routeInstructionsContainer" style="position:absolute; width:100%; height:51%; background:grey" > -->
@@ -38,13 +38,13 @@
     {{ ctrl.hello }}
   <input id="new-request-coord" type="text" ng-model="userStart" placeholder="Start Location">
   <input id="new-request-coord" type="text" ng-model="userEnd" placeholder="Destination">
-    <button id="request-coord" ng-click="ctrl.routeGenerator('starttext='+ userStart + '&endtext=' + userEnd)"> Get Route </button>
+    <button id="request-coord" ng-click="ctrl.routeGenerator(&apos;starttext=&apos;+ userStart + &apos;&amp;endtext=&apos; + userEnd)"> Get Route </button>
      <!--  <div id="routeInstructionsContainer" style="position:absolute; width:100%; height:51%; background:grey" > -->
 
     <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
   </div>
 
-</div></body>
+</body>
 </ion-content>
 </ion-view>
 </html>
