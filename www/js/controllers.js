@@ -72,7 +72,7 @@ console.log(mapContainer);
   self.getLocation= function(userInputLocation) {
     var location = userInputLocation;
     console.log(location);
-    var extraparams = '&type=pedestrian&nightmode=park:-1,tunnel:-1'
+    var extraparams = '&nightmode=park:-1,tunnel:-1'
     var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location + extraparams;
     var data = JSON.stringify(location);
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
