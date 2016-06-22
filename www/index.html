@@ -44,7 +44,7 @@
   <div id="locationField" ng-controller="MapController as ctrl">
     <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
     <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
-      <button id="request-coord" ng-click="ctrl.routeGenerator(&apos;starttext=&apos; + userStart + &apos;&amp;endtext=&apos; + userEnd)"> Get Route </button>
+      <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd)"> Get Route </button>
       <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
 
   </div>
