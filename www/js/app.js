@@ -30,4 +30,8 @@ noParks.run(function($ionicPlatform) {
       templateUrl: "index.html",
       controller: 'MapController'
     });
+
+    socket: {
+      domain: 'http://localhost:3000'
+    }
 });

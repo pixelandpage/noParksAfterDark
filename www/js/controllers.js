@@ -73,7 +73,7 @@ console.log(mapContainer);
     var location = userInputLocation;
     console.log(location);
     var extraparams = '&nightmode=park:-1,tunnel:-1';
-    var url = "https://no-parks-after-dark-backend.herokuapp.com/route/api/?" + location + extraparams;
+    var url = "http://localhost:3000/route/api/?" + location + extraparams;
     var data = JSON.stringify(location);
     var headers = { headers: { 'Content-Type': 'application/json' }, dataType: 'jsonp'};
     return $http.get(url).then(function(result) {

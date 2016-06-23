@@ -33,32 +33,32 @@
 
         <div ng-controller="MapController as ctrl">
           <div id="mapContainer" style="width: 640px; height: 480px"></div>
-          <div class="row responsive-sm">
+          <!-- <div class="row responsive-sm"> -->
             <div class="bar bar-footer">
 
               <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A300%2C400%2C500">
 
               <div class="list">
                 <div id="locationField" ng-controller="MapController as ctrl">
-                  <div class="row">
-                    <div class="col">
+                  <!-- <div class="row">
+                    <div class="col"> -->
                       <label class="item item-input">
                         <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
                       </label>
-                    </div>
-                  </div>
-                </div>
+                    <!-- </div>
+                  </div> -->
+                <!-- </div> -->
 
                 <br>
 
-                <div class="row">
-                  <div class="col">
+                <!-- <div class="row">
+                  <div class="col"> -->
                     <label class="item item-input">
                       <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
                     </label>
-                  </div>
-                </div>
-              </div>
+                  <!-- </div>
+                </div> -->
+
 
               <ion-list>
                 <ion-radio ng-model="choice" ng-value="'pedestrian'" ><i class="ion-android-walk"> Walking</i></ion-radio>
@@ -77,8 +77,11 @@
 
               <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
             </div>
-            <div id="routeInstructionsContainer" ></div>
+            </div>
           </div>
+            <ion-scroll zooming="true" direction="y" style="width: 500px; height: 100px">
+              <div id="routeInstructionsContainer" ></div>
+            </ion-scroll>
           <script>
             var autocomplete;
 
