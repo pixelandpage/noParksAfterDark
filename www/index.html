@@ -27,17 +27,31 @@
     <script src="/bower_components/angular-aria/angular-aria.js"></script>
     <script src="/bower_components/angular-animate/angular-animate.js"></script>
     <script src="/bower_components/angular-material/angular-material.js"></script>
+    <div class="bar bar-header bar-dark">
+      <h1 class="title">No Parks After Dark</h1>
+    </div>
   <div ng-controller="MapController as ctrl">
       <div id="mapContainer" style="width: 640px; height: 480px">
       </div>
+
+      <div class="row responsive-sm">
+        <div class="bar bar-footer">
+
   <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A300%2C400%2C500">
   <div id="locationField" ng-controller="MapController as ctrl">
+
+    <div class="list">
+  <label class="item item-input">
     <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
+  </label>
+  <label class="item item-input">
     <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
-    <ion-list>
-      <ion-radio ng-model="choice" ng-value="'pedestrian'" >Walking</ion-radio>
-      <ion-radio ng-model="choice" ng-value="'publicTransportTimeTable'">Public Transport</ion-radio>
-    </ion-list>
+  </label>
+</div>
+<ion-list>
+  <ion-radio ng-model="choice" ng-value="'pedestrian'" >Walking</ion-radio>
+  <ion-radio ng-model="choice" ng-value="'publicTransportTimeTable'">Public Transport</ion-radio>
+</ion-list>
     <ul class="list">
       <li class="item item-toggle">
          Nightmode
@@ -46,13 +60,17 @@
            <div class="track">
              <div class="handle"></div>
            </div>
+
          </label>
       </li>
     </ul>
 
 
+
       <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
-      <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
+    </div>
+    </div>
+      <div id="routeInstructionsContainer" ></div>
 
   </div>
   <script>
