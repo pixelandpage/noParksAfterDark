@@ -27,9 +27,12 @@
      <ion-content>
 
       <body ng-app="noParks">
-        <div class="bar bar-header bar-dark">
+        <ion-header-bar class="bar bar-header bar-dark">
           <h1 class="title">No Parks After Dark</h1>
-        </div>
+          <div class="buttons">
+            <button class="button button-icon ion-compose" ng-click="modal.show()"></button>
+          </div>
+        </ion-header-bar>
 
         <div ng-controller="MapController as ctrl">
           <div id="mapContainer" style="width: 640px; height: 480px"></div>
