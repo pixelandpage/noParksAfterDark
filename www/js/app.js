@@ -34,8 +34,11 @@ noParks.run(function($ionicPlatform) {
       abstract: true,
       templateUrl: "index.html",
       controller: 'MapController'
-    })
+    });
 
+socket: {
+    domain: 'http://localhost:3000'
+}
 
 });
 // var factories = angular.module('factories', []);
