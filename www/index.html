@@ -42,17 +42,24 @@
   <div id="locationField" ng-controller="MapController as ctrl">
     <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
     <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
-    <label>
-    <input type="radio" ng-model="color.name" value="pedestrian" >
-    Walking
-  </label><br/>
-  <label>
-    <input type="radio" ng-model="color.name" value="publicTransportTimeTable" >
-    Public Transport
-  </label>
+    <ion-list>
+      <ion-radio ng-model="choice" ng-value="'pedestrian'" >Walking</ion-radio>
+      <ion-radio ng-model="choice" ng-value="'publicTransportTimeTable'">Public Transport</ion-radio>
+    </ion-list>
+    <ul class="list">
+      <li class="item item-toggle">
+         Nightmode
+         <label class="toggle toggle-assertive">
+           <input type="checkbox">
+           <div class="track">
+             <div class="handle"></div>
+           </div>
+         </label>
+      </li>
+    </ul>
 
 
-      <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + color.name )"> Get Route </button>
+      <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
       <div id="routeInstructionsContainer" style="width: 640px; height: 480px"></div>
 
   </div>
