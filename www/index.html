@@ -22,6 +22,17 @@
       <script src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
       <script src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
       <script src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+      <script>
+      $(document).ready(function(){
+        $('#boop').on('click', function(){
+          $('#list').attr('class', 'closedlist');
+        });
+        $('#unboop').on('click', function(){
+          $('#list').attr('class', 'openlist');
+        });
+      });
+      ​
+      </script>
   </head>
   <ion-view title="Map">
      <ion-content>
@@ -30,89 +41,79 @@
         <ion-header-bar class="bar bar-header bar-dark">
           <h1 class="title">No Parks After Dark</h1>
           <div class="buttons">
-            <button class="button button-icon ion-compose" ng-click="modal.show()"></button>
+            <button id='unboop' class="button button-icon ion-compose" ng-click="modal.show()"></button>
           </div>
         </ion-header-bar>
 
         <div ng-controller="MapController as ctrl">
           <div id="mapContainer" style="width: 640px; height: 480px"></div>
-          <!-- <div class="row responsive-sm"> -->
-            <div class="bar bar-footer">
-
+            <br>
               <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A300%2C400%2C500">
 
-              <div class="list">
+              <div id="list" class="openlist">
                 <div id="locationField" ng-controller="MapController as ctrl">
-                  <!-- <div class="row">
-                    <div class="col"> -->
-                      <label class="item item-input">
-                        <input class="autocomplete" id="ac1" type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
-                      </label>
-                    <!-- </div>
-                  </div> -->
-                <!-- </div> -->
-
-                <br>
-
-                <!-- <div class="row">
-                  <div class="col"> -->
-                    <label class="item item-input">
-                      <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
-                    </label>
-                  <!-- </div>
-                </div> -->
+                  <label class="item item-input">
+                    <input class="autocomplete"  type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
+                  </label>
+                  <label class="item item-input">
+                    <input class="autocomplete" id="ac2" type="text" ng-model="userEnd" placeholder="Destination" onfocus="geolocate()">
+                  </label>
+                  <br>
 
 
-              <ion-list>
-                <ion-radio ng-model="choice" ng-value="'pedestrian'" ><i class="ion-android-walk"> Walking</i></ion-radio>
-                <ion-radio ng-model="choice" ng-value="'publicTransportTimeTable'"><i class="ion-android-subway"> Public Transport</i></ion-radio>
-              </ion-list>
-                <ul class="list">
-                  <li class="item item-toggle"> Nightmode
-                    <label class="toggle toggle-assertive">
-                      <input type="checkbox">
-                      <div class="track">
-                        <div class="handle"></div>
-                      </div>
-                    </label>
-                  </li>
-                </ul>
+                  <ion-list class="choice">
+                    <ion-radio ng-model="choice" ng-value="'pedestrian'" ><i class="ion-android-walk"> Walking</i></ion-radio>
+                    <ion-radio ng-model="choice" ng-value="'publicTransportTimeTable'"><i class="ion-android-subway"> Public Transport</i></ion-radio>
+                  </ion-list>
+                    <ul class="list">
+                      <li class="item item-toggle"> Nightmode
+                        <label class="toggle toggle-assertive">
+                          <input type="checkbox">
+                          <div class="track">
+                            <div class="handle"></div>
+                          </div>
+                        </label>
+                      </li>
+                    </ul>
 
-              <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
-            </div>
-            </div>
-          </div>
-            <ion-scroll zooming="true" direction="y" style="width: 500px; height: 100px">
-              <div id="routeInstructionsContainer" ></div>
-            </ion-scroll>
-          <script>
-            var autocomplete;
+                  <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
+                </div>
+                </div>
 
-            function initAutocomplete() {
-              var acInputs = document.getElementsByClassName("autocomplete");
+              </div>
+                <ion-scroll zooming="true" direction="y" style="width: 500px; height: 100px">
+                  <div id="routeInstructionsContainer" ></div>
+                </ion-scroll>
+              <script>
+                var autocomplete;
 
-              for (var i = 0; i < acInputs.length; i++) {
-                var autocomplete = new google.maps.places.Autocomplete(acInputs[i]);
-                autocomplete.inputId = acInputs[i].id;
-              }
-            }
+                function initAutocomplete() {
+                  var acInputs = document.getElementsByClassName("autocomplete");
 
-            function geolocate() {
-              if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                  var geolocation = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                  };
-                  var circle = new google.maps.Circle({
-                    center: geolocation,
-                    radius: position.coords.accuracy
-                  });
-                  autocomplete.setBounds(circle.getBounds());
-                });
-              }
-            }
-          </script>
+                  for (var i = 0; i < acInputs.length; i++) {
+                    var autocomplete = new google.maps.places.Autocomplete(acInputs[i]);
+                    autocomplete.inputId = acInputs[i].id;
+                  }
+                }
+
+                function geolocate() {
+                  if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                      var geolocation = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                      };
+                      var circle = new google.maps.Circle({
+                        center: geolocation,
+                        radius: position.coords.accuracy
+                      });
+                      autocomplete.setBounds(circle.getBounds());
+                    });
+                  }
+                }
+              </script>
+              <div class="bar bar-footer">
+
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeDWP97EV9nfUm4RhpWyVZ0fsTT9hBHgs&libraries=places&callback=initAutocomplete" async defer></script>
         </div>
       </body>
