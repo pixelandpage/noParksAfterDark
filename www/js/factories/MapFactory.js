@@ -30,8 +30,8 @@ angular.module('noParks.factories', [])
                         lat: lat,
                         lng: long
                     },
-                    zoom: 13
-                }
+                    zoom: 14
+                };
             });
         }
 

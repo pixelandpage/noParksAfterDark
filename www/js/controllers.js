@@ -70,7 +70,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
     var maptypes = platform.createDefaultLayers();
     document.getElementById('mapContainer').innerHTML = '';
 
-    map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map);
+    map = new H.Map(document.getElementById('mapContainer'), maptypes.normal.map,{zoom: 6});
     var ui = H.ui.UI.createDefault(map, maptypes);
     var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
     var route = result.data.response.route;
@@ -98,7 +98,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
     polyline = new H.map.Polyline(strip, {
       style: {
          lineWidth: 4,
-         strokeColor: 'rgba(0, 128, 255, 0.7)'
+         strokeColor: 'rgba(95,26,55, 0.7)'
        }
     });
 
@@ -110,7 +110,7 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
 
   function addManueversToMap(route){
     var svgMarkup = '<svg width="18" height="18" ' + 'xmlns="http://www.w3.org/2000/svg">' +
-      '<circle cx="8" cy="8" r="8" ' + 'fill="#1b468d " stroke="white" stroke-width="1"  />' + '</svg>',
+      '<circle cx="8" cy="8" r="8" ' + 'fill="#776885 " stroke="white" stroke-width="1"  />' + '</svg>',
     dotIcon = new H.map.Icon(svgMarkup, {anchor: {x:8, y:8}}),
     group = new  H.map.Group(), i, j;
 
