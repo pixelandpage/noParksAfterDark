@@ -22,17 +22,6 @@
       <script src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
       <script src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
       <script src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
-      <script>
-      $(document).ready(function(){
-        $('#boop').on('click', function(){
-          $('#list').attr('class', 'closedlist');
-        });
-        $('#unboop').on('click', function(){
-          $('#list').attr('class', 'openlist');
-        });
-      });
-      ​
-      </script>
   </head>
   <ion-view title="Map">
      <ion-content>
@@ -40,17 +29,19 @@
       <body ng-app="noParks">
         <ion-header-bar class="bar bar-header bar-dark">
           <h1 class="title">No Parks After Dark</h1>
-          <div class="buttons">
-            <button id='unboop' class="button button-icon ion-compose" ng-click="modal.show()"></button>
-          </div>
         </ion-header-bar>
+
+        <br>
 
         <div ng-controller="MapController as ctrl">
           <div id="mapContainer" style="width: 640px; height: 480px"></div>
             <br>
-              <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A300%2C400%2C500">
-
-              <div id="list" class="openlist">
+            <ion-scroll zooming="true" direction="y" style="width: 500px; height: 100px">
+              <div id="routeInstructionsContainer" font="white"></div>
+            </ion-scroll>
+            <br>
+              <!-- <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A300%2C400%2C500"> -->
+              <div class="list">
                 <div id="locationField" ng-controller="MapController as ctrl">
                   <label class="item item-input">
                     <input class="autocomplete"  type="text" ng-model="userStart" placeholder="Start Location" onfocus="geolocate()">
@@ -76,14 +67,11 @@
                       </li>
                     </ul>
 
-                  <button id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
+                  <button class='button button-block button-medium' id="request-coord" ng-click="ctrl.routeGenerator('starttext=' + userStart + '&endtext=' + userEnd + '&type=' + choice )"> Get Route </button>
                 </div>
                 </div>
 
               </div>
-                <ion-scroll zooming="true" direction="y" style="width: 500px; height: 100px">
-                  <div id="routeInstructionsContainer" ></div>
-                </ion-scroll>
               <script>
                 var autocomplete;
 
@@ -112,9 +100,9 @@
                   }
                 }
               </script>
-              <div class="bar bar-footer">
 
           <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCeDWP97EV9nfUm4RhpWyVZ0fsTT9hBHgs&libraries=places&callback=initAutocomplete" async defer></script>
+
         </div>
       </body>
     </ion-content>

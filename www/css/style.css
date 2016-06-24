@@ -1,5 +1,5 @@
 /* Empty. Add your own CSS if you like */
-/*@import "nib"
+@import "nib"
 
 html, body {
   height: 100%;
@@ -14,38 +14,22 @@ div .list {
   margin: 0 auto;
   width: 250px;
 }
-/*
+
 ion-list .choice {
-  width: 10000px;
   margin: 0 auto;
 
-}*/
-
-/*#list {
-  transition: all 0.3s;
 }
 
-.openlist {
-  height: 200px;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
-}*/
-
-/*.closedlist {
-  height: 0px;
-  width: 200px;
-  margin-left: auto;
-  margin-right: auto;
-  overflow: hidden;
+/*ion-content {
+  background-color: #2E2E2E;
 }
 
-input {
-  width: 180px;
-  height: 40px;
-  background-color: #CCCCCC;
-  border: 1px solid white;
+.routeInstructionsContainer {
+  color: white;
+}*/
+
+/*.routeInstructionsContainer {
+  background-color: #C0C0C0;
 }*/
 
 /*body
