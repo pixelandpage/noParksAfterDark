@@ -80,7 +80,8 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
 
   function routeInstructions(result){
     var route = result.data.response.route[0];
-    addWaypointsToPanel(route.waypoint);
+      document.getElementById('routeInstructionsContainer').innerHTML = '';
+    // addWaypointsToPanel(route.waypoint);
     addManueversToPanel(route);
     addSummaryToPanel(route.summary);
   }
@@ -139,21 +140,21 @@ noParks.service('routeGeneratorService', ['$http', 'MapFactory', function($http,
 
   }
 
-function addWaypointsToPanel(waypoints){
-
-  var nodeH3 = document.createElement('h3'),
-    waypointLabels = [],
-    i;
-
-   for (i = 0;  i < waypoints.length; i += 1) {
-    waypointLabels.push(waypoints[i].label);
-   }
-
-   nodeH3.textContent = waypointLabels.join(' - ');
-
-  routeInstructionsContainer.innerHTML = '';
-  routeInstructionsContainer.appendChild(nodeH3);
-}
+// function addWaypointsToPanel(waypoints){
+//
+//   var nodeH3 = document.createElement('h3'),
+//     waypointLabels = [],
+//     i;
+//
+//    for (i = 0;  i < waypoints.length; i += 1) {
+//     waypointLabels.push(waypoints[i].label);
+//    }
+//
+//    nodeH3.textContent = waypointLabels.join(' - ');
+//
+//   routeInstructionsContainer.innerHTML = '';
+//   routeInstructionsContainer.appendChild(nodeH3);
+// }
 
 function addSummaryToPanel(summary){
   var summaryDiv = document.createElement('div'),
