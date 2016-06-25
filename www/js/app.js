@@ -7,16 +7,14 @@
 // 'starter.controllers' is found in controllers.js
 
 var noParks = angular.module('noParks', ['ionic','ionic.service.core', 'noParks.controllers', 'noParks.factories', 'ngCordova']);
+
 noParks.run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
-    // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-    // for form inputs)
     if (window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard) {
       cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
       cordova.plugins.Keyboard.disableScroll(true);
     }
     if (window.StatusBar) {
-      // org.apache.cordova.statusbar required
       StatusBar.styleDefault();
     }
   });
@@ -31,7 +29,7 @@ noParks.run(function($ionicPlatform) {
       controller: 'MapController'
     });
 
-    socket: {
-      domain: 'http://localhost:3000'
-    }
+  socket: {
+    domain: 'http://localhost:3000'
+  }
 });
