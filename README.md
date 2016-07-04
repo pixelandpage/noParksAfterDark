@@ -1,19 +1,9 @@
-# noParksAfterDark
+# No Parks After Dark Frontend
 
-notes about tech used
+A safer-routing app that displays directions from A to B on android and IOS.
 
-Node with Express framework
-100% Javascript
-EAN Stack
+Nightmode automatically routes around parks, tunnels, alleyways and no-through-roads so you can be confident that your journey home will feel safe from beginning to end. From concept to MVP in just two weeks.
 
-Ionic
-Mostly new technologies
+**Built With:** Javascript, Angular.js, Ionic
 
-Heroku
-
-Completely decoupled front and back end
-
-REST API
-Javascript API
-
-cordova-plugin-geolocation API
+[Backend](https://github.com/pixelandpage/noParksAfterDarkBackend)
